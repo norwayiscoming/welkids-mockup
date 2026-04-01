@@ -1,16 +1,58 @@
 ---
-// WelKids - Children's Vitamin Product Campaign
+import MainLayout from '../layouts/MainLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Button from '../components/Button.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>WelKids</title>
-  </head>
-  <body>
-    <h1>WelKids</h1>
-  </body>
-</html>
+<MainLayout
+  title="WelKids — Vitamin Tăng Trưởng Toàn Diện Cho Bé"
+  description="WelKids cung cấp vitamin và sản phẩm chăm sóc sức khỏe chất lượng cao dành cho trẻ em."
+>
+  <!-- Hero test section -->
+  <section class="hero section-lg bg-gradient-hero">
+    <div class="container hero-inner">
+      <div class="fade-up">
+        <SectionHeader
+          badge="Chào mừng đến với WelKids"
+          title="Đồng hành cùng con yêu phát triển toàn diện"
+          subtitle="Sản phẩm vitamin chất lượng cao giúp trẻ khoẻ mạnh, thông minh và hạnh phúc mỗi ngày."
+          align="center"
+        />
+      </div>
+
+      <div class="hero-actions fade-up" style="animation-delay: 0.1s;">
+        <Button variant="primary" size="lg" href="#lop-hoc">
+          Khám phá ngay
+        </Button>
+        <Button variant="secondary" size="lg" href="#lien-he">
+          Liên hệ tư vấn
+        </Button>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+    padding-block: 60px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

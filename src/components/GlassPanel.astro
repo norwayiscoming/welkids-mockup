@@ -1,0 +1,29 @@
+---
+interface Props {
+  variant?: 'leaf' | 'warm' | 'frost';
+  radius?: string;
+  padding?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'leaf',
+  radius,
+  padding,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const glassClass = `${variant}-glass`;
+const classes = [glassClass, className].filter(Boolean).join(' ');
+
+const style = [
+  radius ? `border-radius: ${radius}` : '',
+  padding ? `padding: ${padding}` : '',
+].filter(Boolean).join('; ');
+---
+
+<div class={classes} style={style || undefined} {...rest}>
+  <slot />
+</div>

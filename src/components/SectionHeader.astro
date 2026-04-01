@@ -1,0 +1,115 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  align?: 'center' | 'left' | 'right';
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  badge,
+  align = 'center',
+  class: className = '',
+} = Astro.props;
+
+const classes = ['section-header', `section-header--${align}`, className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={classes}>
+  {badge && (
+    <div class="section-badge frost-glass">
+      <span class="badge-dot" aria-hidden="true"></span>
+      <span class="badge-text">{badge}</span>
+    </div>
+  )}
+  <h2 class="section-title">{title}</h2>
+  {subtitle && (
+    <p class="section-subtitle">{subtitle}</p>
+  )}
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-header--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .section-header--left {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .section-header--right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  /* ---- Badge ---- */
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+  }
+
+  .badge-dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .badge-text {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--color-primary-dark);
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- Title ---- */
+  .section-title {
+    font-family: var(--font-heading);
+    color: var(--color-heading);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  /* ---- Subtitle ---- */
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--color-body);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .section-header--center .section-subtitle {
+    margin-inline: auto;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 640px) {
+    .section-title {
+      font-size: 22px;
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+    }
+  }
+</style>

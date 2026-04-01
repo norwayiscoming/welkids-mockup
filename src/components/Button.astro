@@ -1,0 +1,146 @@
+---
+interface Props {
+  variant?: 'primary' | 'accent' | 'warm' | 'secondary' | 'ghost' | 'glass';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  fullWidth?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  fullWidth = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const classes = ['btn', `btn-${variant}`, `btn-${size}`, fullWidth ? 'btn-full' : '', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<Tag href={href} class={classes} {...rest}>
+  <slot name="icon-left" />
+  <slot />
+  <slot name="icon-right" />
+</Tag>
+
+<style>
+  /* ---- Base ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition:
+      filter 0.2s ease,
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
+    white-space: nowrap;
+    line-height: 1;
+    position: relative;
+  }
+
+  .btn:active {
+    transform: translateY(2px);
+    box-shadow: none !important;
+  }
+
+  .btn-full {
+    width: 100%;
+  }
+
+  /* ---- Sizes ---- */
+  .btn-sm {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .btn-md {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .btn-lg {
+    font-size: 16px;
+    padding: 15px 32px;
+  }
+
+  /* ---- Variants ---- */
+
+  /* Primary */
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, #6DB87A 0%, #5EAA6E 50%, #4F9C60 100%);
+    box-shadow: 0 2px 0 #3D8B4F;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.06);
+  }
+
+  /* Accent */
+  .btn-accent {
+    color: #2D4A35;
+    background: linear-gradient(180deg, #F8D76E 0%, #F5C842 50%, #E8B830 100%);
+    box-shadow: 0 2px 0 #D4A520;
+  }
+  .btn-accent:hover {
+    filter: brightness(1.04);
+  }
+
+  /* Warm */
+  .btn-warm {
+    color: #2D4A35;
+    background: linear-gradient(180deg, #FFCC80 0%, #FFB74D 50%, #FFA726 100%);
+    box-shadow: 0 2px 0 #E69520;
+  }
+  .btn-warm:hover {
+    filter: brightness(1.04);
+  }
+
+  /* Secondary */
+  .btn-secondary {
+    color: var(--color-primary-dark);
+    background: #fff;
+    border: 2px solid #C8E0CC;
+    box-shadow: 0 2px 0 #C8E0CC;
+  }
+  .btn-secondary:hover {
+    background: var(--color-mint-gray);
+    border-color: var(--color-primary-light);
+  }
+
+  /* Ghost */
+  .btn-ghost {
+    color: var(--color-body);
+    background: var(--color-mint-gray);
+    box-shadow: 0 2px 0 #DCE5DD;
+  }
+  .btn-ghost:hover {
+    background: var(--color-leaf-gray);
+    color: var(--color-heading);
+  }
+
+  /* Glass */
+  .btn-glass {
+    color: var(--color-heading);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(94, 170, 110, 0.25);
+    box-shadow: 0 2px 8px rgba(61, 139, 79, 0.08);
+  }
+  .btn-glass:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>

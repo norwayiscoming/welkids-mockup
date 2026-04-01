@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'WelKids — Vitamin Tăng Trưởng Toàn Diện Cho Bé',
+  description = 'WelKids cung cấp vitamin và sản phẩm chăm sóc sức khỏe chất lượng cao dành cho trẻ em.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <!-- Fonts are loaded via global.css @import -->
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Fade-up scroll observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -40px 0px',
+        }
+      );
+
+      function initFadeUp() {
+        document.querySelectorAll('.fade-up').forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      // Run on initial load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFadeUp);
+      } else {
+        initFadeUp();
+      }
+    </script>
+  </body>
+</html>
