@@ -1,0 +1,480 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import careers from '../../data/careers.json';
+---
+
+<MainLayout title="Tạo Ảnh Nghề Nghiệp AI">
+
+  <!-- ═══ STATE 1: Upload & Options ═══ -->
+  <div id="state-upload" class="section bg-gradient-warm" style="position: relative; overflow: hidden;">
+
+    <!-- Decorative blobs -->
+    <div class="blob blob-yellow" style="width: 400px; height: 400px; top: -100px; right: -80px; opacity: 0.6;"></div>
+    <div class="blob blob-green" style="width: 300px; height: 300px; bottom: -60px; left: -60px; opacity: 0.5;"></div>
+    <div class="blob blob-white" style="width: 200px; height: 200px; top: 50%; left: 20%; opacity: 0.7;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+      <SectionHeader
+        title="Tạo Ảnh Nghề Nghiệp Bằng AI"
+        subtitle="Tải ảnh bé lên và chọn nghề nghiệp mơ ước. AI sẽ tạo ra bức ảnh thú vị cho bé!"
+        align="center"
+      />
+
+      <div class="warm-glass upload-card">
+
+        <!-- Upload Zone -->
+        <div id="upload-zone" class="upload-zone" role="button" tabindex="0" aria-label="Tải ảnh lên">
+          <div id="upload-placeholder">
+            <div class="upload-icon animate-float-slow">📸</div>
+            <p class="upload-title">Tải ảnh bé lên</p>
+            <p class="upload-hint text-muted">Kéo thả hoặc nhấn để chọn ảnh</p>
+          </div>
+          <div id="upload-success" style="display: none;">
+            <div class="upload-thumbnail">
+              <span class="upload-check">✓</span>
+            </div>
+            <p class="upload-title" style="color: var(--color-primary-dark);">Ảnh đã tải lên!</p>
+            <p class="upload-hint" style="color: var(--color-primary);">Nhấn để đổi ảnh</p>
+          </div>
+        </div>
+
+        <!-- Career Selection -->
+        <div class="career-section">
+          <label class="career-label">Chọn nghề nghiệp:</label>
+          <div class="career-chips">
+            {careers.map((career) => (
+              <button
+                class="career-chip frost-glass"
+                data-career-id={career.id}
+                data-career-label={career.label}
+                type="button"
+                aria-pressed="false"
+              >
+                <span class="chip-emoji">{career.emoji}</span>
+                <span class="chip-label">{career.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <button
+          id="generate-btn"
+          class="btn btn-accent btn-lg btn-full"
+          type="button"
+          disabled
+          aria-disabled="true"
+        >
+          ✨ Tạo ảnh bằng AI
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STATE 2: Processing ═══ -->
+  <div id="state-processing" style="display: none;" class="section bg-gradient-warm" style="position: relative; overflow: hidden;">
+    <div class="container">
+      <div class="leaf-glass processing-card">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2 class="font-heading processing-title">AI đang tạo ảnh...</h2>
+        <p class="text-muted processing-hint">Vui lòng chờ trong giây lát</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STATE 3: Result ═══ -->
+  <div id="state-result" style="display: none;" class="section bg-gradient-warm" style="position: relative; overflow: hidden;">
+    <div class="container">
+      <div class="result-card">
+
+        <!-- Image Placeholder -->
+        <div class="leaf-glass result-image-frame">
+          <span class="result-emoji">🎨</span>
+        </div>
+
+        <!-- Career Badge -->
+        <div id="result-badge" class="frost-glass career-badge">
+          <span id="result-career-emoji"></span>
+          <span id="result-career-label"></span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="result-actions">
+          <button id="download-btn" class="btn btn-accent btn-lg" type="button">
+            ↓ Tải về
+          </button>
+          <button id="retry-btn" class="btn btn-ghost btn-lg" type="button">
+            Thử nghề khác
+          </button>
+        </div>
+
+        <!-- Award Link -->
+        <a href="/awards/" class="award-link">
+          Gửi ảnh dự thi giải thưởng →
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+</MainLayout>
+
+<style>
+  /* ── Upload Card ── */
+  .upload-card {
+    max-width: 500px;
+    margin: 48px auto 0;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── Upload Zone ── */
+  .upload-zone {
+    border: 2px dashed rgba(213, 165, 32, 0.3);
+    border-radius: 20px;
+    padding: 40px 24px;
+    background: rgba(255, 248, 225, 0.3);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .upload-zone:hover,
+  .upload-zone:focus {
+    border-color: rgba(213, 165, 32, 0.6);
+    background: rgba(255, 248, 225, 0.5);
+    outline: none;
+  }
+
+  .upload-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .upload-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-heading);
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+
+  /* Uploaded thumbnail */
+  .upload-thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #5EAA6E, #A8D5B5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .upload-check {
+    font-size: 32px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* ── Career Section ── */
+  .career-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .career-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-heading);
+  }
+
+  .career-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ── Career Chip ── */
+  .career-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: var(--color-body);
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  }
+
+  .career-chip:hover {
+    border-color: rgba(245, 200, 66, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .career-chip.selected {
+    background: var(--color-accent-tint);
+    border-color: var(--color-accent);
+    color: var(--color-heading);
+  }
+
+  .chip-emoji {
+    font-size: 16px;
+  }
+
+  /* ── Generate Button ── */
+  #generate-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── Processing Card ── */
+  .processing-card {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 56px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .processing-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-top: 8px;
+  }
+
+  .processing-hint {
+    font-size: 15px;
+    color: var(--color-muted);
+  }
+
+  /* ── Spinner ── */
+  .spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 5px solid rgba(94, 170, 110, 0.15);
+    border-top-color: var(--color-primary);
+    border-right-color: var(--color-accent);
+    animation: spin 0.9s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ── Result Card ── */
+  .result-card {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* Result image frame */
+  .result-image-frame {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--color-primary-tint), var(--color-accent-tint));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-card-lg);
+  }
+
+  .result-emoji {
+    font-size: 80px;
+  }
+
+  /* Career badge */
+  .career-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  /* Result actions */
+  .result-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Award link */
+  .award-link {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .award-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .upload-card {
+      padding: 24px 16px;
+      margin-top: 32px;
+    }
+
+    .processing-card {
+      padding: 40px 24px;
+    }
+
+    .result-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .result-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // ── State tracking ──
+  let uploaded = false;
+  let selectedCareer: { id: number; label: string; emoji: string } | null = null;
+
+  // ── DOM refs ──
+  const stateUpload = document.getElementById('state-upload')!;
+  const stateProcessing = document.getElementById('state-processing')!;
+  const stateResult = document.getElementById('state-result')!;
+
+  const uploadZone = document.getElementById('upload-zone')!;
+  const uploadPlaceholder = document.getElementById('upload-placeholder')!;
+  const uploadSuccess = document.getElementById('upload-success')!;
+
+  const generateBtn = document.getElementById('generate-btn') as HTMLButtonElement;
+  const retryBtn = document.getElementById('retry-btn')!;
+  const careerChips = document.querySelectorAll<HTMLButtonElement>('.career-chip');
+
+  const resultCareerEmoji = document.getElementById('result-career-emoji')!;
+  const resultCareerLabel = document.getElementById('result-career-label')!;
+
+  // ── Helpers ──
+  function showState(state: 'upload' | 'processing' | 'result') {
+    stateUpload.style.display = state === 'upload' ? 'block' : 'none';
+    stateProcessing.style.display = state === 'processing' ? 'block' : 'none';
+    stateResult.style.display = state === 'result' ? 'block' : 'none';
+  }
+
+  function updateGenerateBtn() {
+    const enabled = uploaded && selectedCareer !== null;
+    generateBtn.disabled = !enabled;
+    generateBtn.setAttribute('aria-disabled', String(!enabled));
+  }
+
+  // ── Upload zone interaction ──
+  uploadZone.addEventListener('click', () => {
+    // Simulate upload: show success thumbnail
+    uploadPlaceholder.style.display = 'none';
+    uploadSuccess.style.display = 'block';
+    uploaded = true;
+    updateGenerateBtn();
+  });
+
+  uploadZone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      uploadZone.click();
+    }
+  });
+
+  // ── Career chip selection ──
+  careerChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      // Deselect all
+      careerChips.forEach((c) => {
+        c.classList.remove('selected');
+        c.setAttribute('aria-pressed', 'false');
+      });
+
+      // Select this one
+      chip.classList.add('selected');
+      chip.setAttribute('aria-pressed', 'true');
+
+      selectedCareer = {
+        id: Number(chip.dataset.careerId),
+        label: chip.dataset.careerLabel ?? '',
+        emoji: chip.querySelector('.chip-emoji')?.textContent ?? '',
+      };
+
+      updateGenerateBtn();
+    });
+  });
+
+  // ── Generate button ──
+  generateBtn.addEventListener('click', () => {
+    if (!uploaded || !selectedCareer) return;
+
+    showState('processing');
+
+    // Auto-transition to result after 3 seconds
+    setTimeout(() => {
+      // Populate result badge
+      resultCareerEmoji.textContent = selectedCareer!.emoji;
+      resultCareerLabel.textContent = selectedCareer!.label;
+
+      showState('result');
+    }, 3000);
+  });
+
+  // ── Retry button ──
+  retryBtn.addEventListener('click', () => {
+    // Reset state
+    uploaded = false;
+    selectedCareer = null;
+
+    // Reset upload zone
+    uploadPlaceholder.style.display = 'block';
+    uploadSuccess.style.display = 'none';
+
+    // Deselect all chips
+    careerChips.forEach((c) => {
+      c.classList.remove('selected');
+      c.setAttribute('aria-pressed', 'false');
+    });
+
+    // Disable generate button
+    updateGenerateBtn();
+
+    showState('upload');
+  });
+</script>
