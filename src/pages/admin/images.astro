@@ -1,0 +1,56 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DataTable from '../../components/DataTable.astro';
+
+const headers = ['Người dùng', 'Nghề nghiệp', 'Ngày tạo', 'Trạng thái'];
+
+const rows = [
+  ['Nguyễn Thị Mai', 'Bác sĩ', '12/01/2025', 'status:active'],
+  ['Trần Văn Hùng', 'Phi công', '18/01/2025', 'status:active'],
+  ['Lê Thị Hoa', 'Giáo viên', '25/01/2025', 'status:pending'],
+  ['Phạm Minh Tuấn', 'Kỹ sư', '02/02/2025', 'status:active'],
+  ['Hoàng Thu Thảo', 'Nhà khoa học', '10/02/2025', 'status:active'],
+  ['Vũ Đức Long', 'Đầu bếp', '15/02/2025', 'status:inactive'],
+];
+---
+
+<AdminLayout title="Quản Lý Ảnh AI — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Quản Lý Ảnh AI</h1>
+    <p>Danh sách ảnh AI được tạo bởi người dùng</p>
+  </div>
+
+  <div class="admin-card">
+    <!-- Toolbar -->
+    <div class="admin-toolbar">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="🔍 Tìm kiếm theo tên người dùng..."
+      />
+      <select class="admin-select">
+        <option value="">Tất cả nghề nghiệp</option>
+        <option value="bac-si">Bác sĩ</option>
+        <option value="phi-cong">Phi công</option>
+        <option value="giao-vien">Giáo viên</option>
+        <option value="ky-su">Kỹ sư</option>
+      </select>
+      <select class="admin-select">
+        <option value="">Trạng thái</option>
+        <option value="active">Hoạt động</option>
+        <option value="pending">Chờ duyệt</option>
+        <option value="inactive">Vô hiệu</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <DataTable headers={headers} rows={rows} />
+
+    <!-- Pagination -->
+    <div class="admin-pagination">
+      <button class="pagination-btn">← Trước</button>
+      <span>Trang 1 / 3</span>
+      <button class="pagination-btn">Sau →</button>
+    </div>
+  </div>
+</AdminLayout>

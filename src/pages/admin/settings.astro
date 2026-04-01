@@ -1,0 +1,151 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Cài Đặt — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Cài Đặt</h1>
+    <p>Cấu hình hệ thống WelKids Campaign</p>
+  </div>
+
+  <form class="settings-form" onsubmit="return false;">
+    <!-- Section 1: Thông tin chung -->
+    <div class="admin-card settings-section">
+      <h2>Thông tin chung</h2>
+
+      <div class="settings-form-group">
+        <label for="campaign-name">Tên campaign</label>
+        <input
+          type="text"
+          id="campaign-name"
+          class="settings-input"
+          value="WelKids — Vitamin Tăng Trưởng Toàn Diện"
+          placeholder="Nhập tên campaign..."
+        />
+      </div>
+
+      <div class="settings-form-group">
+        <label for="campaign-desc">Mô tả</label>
+        <textarea
+          id="campaign-desc"
+          class="settings-textarea"
+          rows="3"
+          placeholder="Nhập mô tả campaign..."
+        >Chương trình trải nghiệm vitamin WelKids dành cho trẻ em từ 1-12 tuổi. Khám phá nghề nghiệp yêu thích qua các video sinh động.</textarea>
+      </div>
+
+      <div class="settings-grid-2">
+        <div class="settings-form-group">
+          <label for="start-date">Ngày bắt đầu</label>
+          <input
+            type="date"
+            id="start-date"
+            class="settings-input"
+            value="2025-01-01"
+          />
+        </div>
+        <div class="settings-form-group">
+          <label for="end-date">Ngày kết thúc</label>
+          <input
+            type="date"
+            id="end-date"
+            class="settings-input"
+            value="2025-12-31"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Cấu hình Campaign -->
+    <div class="admin-card settings-section">
+      <h2>Cấu hình Campaign</h2>
+
+      <div class="settings-grid-2">
+        <div class="settings-form-group">
+          <label for="max-images">Max ảnh AI / ngày</label>
+          <input
+            type="number"
+            id="max-images"
+            class="settings-input"
+            value="3"
+            min="1"
+            max="10"
+          />
+        </div>
+        <div class="settings-form-group">
+          <label for="award-count">Số giải thưởng</label>
+          <input
+            type="number"
+            id="award-count"
+            class="settings-input"
+            value="50"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <div class="settings-form-group">
+        <label for="campaign-status">Trạng thái campaign</label>
+        <select id="campaign-status" class="settings-select">
+          <option value="running" selected>Đang chạy</option>
+          <option value="paused">Tạm dừng</option>
+          <option value="ended">Kết thúc</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 3: Email Templates -->
+    <div class="admin-card settings-section">
+      <h2>Email Templates</h2>
+
+      <div class="settings-form-group">
+        <label for="email-subject">Subject</label>
+        <input
+          type="text"
+          id="email-subject"
+          class="settings-input"
+          value="[WelKids] Chúc mừng bé đã hoàn thành thử thách!"
+          placeholder="Nhập tiêu đề email..."
+        />
+      </div>
+
+      <div class="settings-form-group">
+        <label for="email-body">Body</label>
+        <textarea
+          id="email-body"
+          class="settings-textarea"
+          rows="6"
+          placeholder="Nhập nội dung email..."
+        >Xin chào &#123;name&#125;,
+
+Chúc mừng bé &#123;childName&#125; đã hoàn thành thử thách WelKids!
+
+Bé đã khám phá được nghề nghiệp yêu thích và nhận được ảnh kỷ niệm đặc biệt.
+
+Hãy chia sẻ khoảnh khắc này lên mạng xã hội để nhận thêm phần thưởng từ WelKids!
+
+Trân trọng,
+Đội ngũ WelKids</textarea>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="settings-actions">
+      <button type="submit" class="btn-save">Lưu thay đổi</button>
+    </div>
+  </form>
+</AdminLayout>
+
+<style>
+  .settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 32px;
+  }
+</style>

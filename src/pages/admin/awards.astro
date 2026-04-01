@@ -1,0 +1,49 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DataTable from '../../components/DataTable.astro';
+
+const headers = ['Mã', 'Người dùng', 'Nghề nghiệp', 'Giải', 'Video'];
+
+const rows = [
+  ['GR-001', 'Nguyễn Thị Mai', 'Bác sĩ', 'Giải Nhất', 'Bác sĩ tương lai'],
+  ['GR-002', 'Trần Văn Hùng', 'Phi công', 'Giải Nhì', 'Phi công nhí'],
+  ['GR-003', 'Lê Thị Hoa', 'Giáo viên', 'Giải Ba', 'Giáo viên yêu thương'],
+  ['GR-004', 'Phạm Minh Tuấn', 'Kỹ sư', 'Giải Khuyến Khích', 'Nhà khoa học nhỏ'],
+  ['GR-005', 'Hoàng Thu Thảo', 'Nhà khoa học', 'Giải Khuyến Khích', 'Nhà khoa học nhỏ'],
+];
+---
+
+<AdminLayout title="Quản Lý Giải Thưởng — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Quản Lý Giải Thưởng</h1>
+    <p>Danh sách giải thưởng của chương trình</p>
+  </div>
+
+  <div class="admin-card">
+    <!-- Toolbar -->
+    <div class="admin-toolbar">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="🔍 Tìm kiếm giải thưởng..."
+      />
+      <select class="admin-select">
+        <option value="">Tất cả giải</option>
+        <option value="nhat">Giải Nhất</option>
+        <option value="nhi">Giải Nhì</option>
+        <option value="ba">Giải Ba</option>
+        <option value="kk">Giải Khuyến Khích</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <DataTable headers={headers} rows={rows} />
+
+    <!-- Pagination -->
+    <div class="admin-pagination">
+      <button class="pagination-btn">← Trước</button>
+      <span>Trang 1 / 1</span>
+      <button class="pagination-btn">Sau →</button>
+    </div>
+  </div>
+</AdminLayout>

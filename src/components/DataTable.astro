@@ -1,0 +1,53 @@
+---
+interface Props {
+  headers: string[];
+  rows: string[][];
+}
+
+const { headers, rows } = Astro.props;
+---
+
+<div class="table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        {headers.map((header) => (
+          <th>{header}</th>
+        ))}
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          {row.map((cell) => (
+            <td>
+              {cell.startsWith('status:') ? (
+                <span class={`status-badge status-${cell.replace('status:', '')}`}>
+                  {cell.replace('status:', '') === 'active' ? 'Hoạt động'
+                    : cell.replace('status:', '') === 'pending' ? 'Chờ duyệt'
+                    : 'Vô hiệu'}
+                </span>
+              ) : (
+                <Fragment set:html={cell} />
+              )}
+            </td>
+          ))}
+          <td>
+            <div class="admin-actions">
+              <button type="button">Xem</button>
+              <button type="button">Sửa</button>
+              <button type="button" class="btn-danger">Xóa</button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrapper {
+    overflow-x: auto;
+  }
+</style>

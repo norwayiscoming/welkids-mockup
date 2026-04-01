@@ -1,0 +1,75 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import StatsCard from '../../components/StatsCard.astro';
+
+const statsCards = [
+  { icon: '👥', value: '1,247', label: 'Tổng người dùng', trend: '↑ 12%', trendUp: true },
+  { icon: '🔍', value: '856', label: 'Lượt kiểm tra', trend: '↑ 8%', trendUp: true },
+  { icon: '▶️', value: '3,420', label: 'Video đã xem', trend: '↑ 24%', trendUp: true },
+  { icon: '🖼️', value: '523', label: 'Ảnh AI', trend: '↑ 15%', trendUp: true },
+];
+
+const recentActivities = [
+  { icon: '👤', title: 'Nguyễn Thị Mai đã đăng ký', time: '5 phút trước' },
+  { icon: '🖼️', title: 'Trần Văn Hùng tạo ảnh AI mới', time: '12 phút trước' },
+  { icon: '▶️', title: 'Lê Thị Hoa xem video "Bác sĩ"', time: '28 phút trước' },
+  { icon: '🏆', title: 'Phạm Minh Tuấn nhận giải thưởng', time: '1 giờ trước' },
+  { icon: '🔍', title: 'Hoàng Thu Thảo hoàn thành kiểm tra', time: '2 giờ trước' },
+];
+---
+
+<AdminLayout title="Dashboard — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Dashboard</h1>
+    <p>Tổng quan hệ thống WelKids Campaign</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    {statsCards.map((card) => (
+      <StatsCard
+        icon={card.icon}
+        value={card.value}
+        label={card.label}
+        trend={card.trend}
+        trendUp={card.trendUp}
+      />
+    ))}
+  </div>
+
+  <!-- Charts Placeholder -->
+  <div class="charts-grid">
+    <div class="chart-placeholder">
+      📈 Biểu đồ lượt truy cập
+    </div>
+    <div class="chart-placeholder">
+      📊 Thống kê theo module
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="admin-card">
+    <h2 class="section-title">Hoạt động gần đây</h2>
+    <ul class="activity-list">
+      {recentActivities.map((item) => (
+        <li class="activity-item">
+          <div class="activity-icon">{item.icon}</div>
+          <div class="activity-text">
+            <strong>{item.title}</strong>
+            <span>{item.time}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</AdminLayout>
+
+<style>
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin: 0 0 16px 0;
+  }
+</style>

@@ -1,0 +1,385 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { emoji: '📊', label: 'Dashboard', href: '/admin/' },
+  { emoji: '👥', label: 'Người dùng', href: '/admin/users/' },
+  { emoji: '📝', label: 'Nội dung', href: '/admin/videos/' },
+  { emoji: '🖼️', label: 'Ảnh AI', href: '/admin/images/' },
+  { emoji: '🏆', label: 'Giải thưởng', href: '/admin/awards/' },
+  { emoji: '⚙️', label: 'Cài đặt', href: '/admin/settings/' },
+];
+
+function isActive(href: string) {
+  if (href === '/admin/') {
+    return currentPath === '/admin/' || currentPath === '/admin';
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<aside class="admin-sidebar" id="adminSidebar">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">🦕</div>
+    <div class="sidebar-logo-text">
+      <span class="sidebar-brand">WelKids</span>
+      <span class="sidebar-sub">Admin</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class={`sidebar-nav-item ${isActive(item.href) ? 'is-active' : ''}`}
+      >
+        <span class="nav-emoji">{item.emoji}</span>
+        <span class="nav-label">{item.label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">A</div>
+      <div class="sidebar-user-info">
+        <span class="user-name">Admin</span>
+        <span class="user-role">Quản trị viên</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile hamburger button -->
+<button class="sidebar-hamburger" id="sidebarToggle" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<style>
+  /* ============================================================
+     Sidebar Base
+     ============================================================ */
+  .admin-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #2D4A35;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+    transition: width 0.25s ease;
+  }
+
+  /* ============================================================
+     Logo Area
+     ============================================================ */
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #5EAA6E, #3D8B4F);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-brand {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .sidebar-sub {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     Navigation
+     ============================================================ */
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .sidebar-nav-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .sidebar-nav-item.is-active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  .nav-emoji {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+  }
+
+  .nav-label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ============================================================
+     Footer / User
+     ============================================================ */
+  .sidebar-footer {
+    padding: 16px 12px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5EAA6E, #3D8B4F);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .user-name {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  .user-role {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     Hamburger (mobile)
+     ============================================================ */
+  .sidebar-hamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #2D4A35;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+  }
+
+  .sidebar-hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 90;
+  }
+
+  /* ============================================================
+     Responsive — Tablet (collapse to icons)
+     ============================================================ */
+  @media (max-width: 1024px) {
+    .admin-sidebar {
+      width: 72px;
+    }
+
+    .sidebar-logo-text,
+    .nav-label,
+    .sidebar-user-info {
+      display: none;
+    }
+
+    .sidebar-logo {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .sidebar-nav {
+      align-items: center;
+      padding: 16px 8px;
+    }
+
+    .sidebar-nav-item {
+      justify-content: center;
+      padding: 12px;
+      width: 48px;
+    }
+
+    .sidebar-footer {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0 20px;
+    }
+
+    .sidebar-user {
+      justify-content: center;
+    }
+  }
+
+  /* ============================================================
+     Responsive — Mobile (hidden, hamburger toggle)
+     ============================================================ */
+  @media (max-width: 640px) {
+    .admin-sidebar {
+      width: 260px;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+    }
+
+    .admin-sidebar.is-open {
+      transform: translateX(0);
+    }
+
+    .sidebar-logo-text,
+    .nav-label,
+    .sidebar-user-info {
+      display: flex;
+    }
+
+    .sidebar-logo {
+      justify-content: flex-start;
+      padding: 24px 20px 20px;
+    }
+
+    .sidebar-nav {
+      align-items: stretch;
+      padding: 16px 12px;
+    }
+
+    .sidebar-nav-item {
+      justify-content: flex-start;
+      padding: 11px 12px;
+      width: auto;
+    }
+
+    .sidebar-footer {
+      justify-content: flex-start;
+      padding: 16px 12px 20px;
+    }
+
+    .sidebar-user {
+      justify-content: flex-start;
+    }
+
+    .sidebar-hamburger {
+      display: flex;
+    }
+
+    .sidebar-overlay.is-open {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+
+  if (toggle && sidebar && overlay) {
+    toggle.addEventListener('click', () => {
+      sidebar.classList.toggle('is-open');
+      overlay.classList.toggle('is-open');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+    });
+  }
+</script>

@@ -1,0 +1,55 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DataTable from '../../components/DataTable.astro';
+
+const headers = ['Tiêu đề', 'Phân loại', 'Thời lượng', 'Lượt xem', 'Trạng thái'];
+
+const rows = [
+  ['Bác sĩ tương lai', 'Nghề nghiệp', '3:45', '1,230', 'status:active'],
+  ['Phi công nhí', 'Nghề nghiệp', '4:12', '987', 'status:active'],
+  ['Nhà khoa học nhỏ', 'Khoa học', '5:20', '756', 'status:active'],
+  ['Đầu bếp tài năng', 'Ẩm thực', '3:58', '642', 'status:pending'],
+  ['Giáo viên yêu thương', 'Giáo dục', '4:35', '521', 'status:inactive'],
+];
+---
+
+<AdminLayout title="Quản Lý Nội Dung — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Quản Lý Nội Dung</h1>
+    <p>Danh sách video trong hệ thống</p>
+  </div>
+
+  <div class="admin-card">
+    <!-- Toolbar -->
+    <div class="admin-toolbar">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="🔍 Tìm kiếm video..."
+      />
+      <select class="admin-select">
+        <option value="">Tất cả phân loại</option>
+        <option value="nghe-nghiep">Nghề nghiệp</option>
+        <option value="khoa-hoc">Khoa học</option>
+        <option value="am-thuc">Ẩm thực</option>
+        <option value="giao-duc">Giáo dục</option>
+      </select>
+      <select class="admin-select">
+        <option value="">Trạng thái</option>
+        <option value="active">Hoạt động</option>
+        <option value="pending">Chờ duyệt</option>
+        <option value="inactive">Vô hiệu</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <DataTable headers={headers} rows={rows} />
+
+    <!-- Pagination -->
+    <div class="admin-pagination">
+      <button class="pagination-btn">← Trước</button>
+      <span>Trang 1 / 2</span>
+      <button class="pagination-btn">Sau →</button>
+    </div>
+  </div>
+</AdminLayout>

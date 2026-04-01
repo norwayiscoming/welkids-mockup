@@ -1,0 +1,49 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DataTable from '../../components/DataTable.astro';
+
+const headers = ['Tên', 'Email', 'SĐT', 'Ngày ĐK', 'Trạng thái'];
+
+const rows = [
+  ['Nguyễn Thị Mai', 'mai.nguyen@gmail.com', '0901 234 567', '12/01/2025', 'status:active'],
+  ['Trần Văn Hùng', 'hung.tran@yahoo.com', '0912 345 678', '18/01/2025', 'status:active'],
+  ['Lê Thị Hoa', 'hoa.le@gmail.com', '0923 456 789', '25/01/2025', 'status:pending'],
+  ['Phạm Minh Tuấn', 'tuan.pham@outlook.com', '0934 567 890', '02/02/2025', 'status:active'],
+  ['Hoàng Thu Thảo', 'thao.hoang@gmail.com', '0945 678 901', '10/02/2025', 'status:inactive'],
+  ['Vũ Đức Long', 'long.vu@gmail.com', '0956 789 012', '15/02/2025', 'status:pending'],
+];
+---
+
+<AdminLayout title="Quản Lý Người Dùng — WelKids Admin">
+  <div class="admin-page-header">
+    <h1>Quản Lý Người Dùng</h1>
+    <p>Danh sách tất cả người dùng đã đăng ký</p>
+  </div>
+
+  <div class="admin-card">
+    <!-- Toolbar -->
+    <div class="admin-toolbar">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="🔍 Tìm kiếm người dùng..."
+      />
+      <select class="admin-select">
+        <option value="">Tất cả trạng thái</option>
+        <option value="active">Hoạt động</option>
+        <option value="pending">Chờ duyệt</option>
+        <option value="inactive">Vô hiệu</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <DataTable headers={headers} rows={rows} />
+
+    <!-- Pagination -->
+    <div class="admin-pagination">
+      <button class="pagination-btn">← Trước</button>
+      <span>Trang 1 / 3</span>
+      <button class="pagination-btn">Sau →</button>
+    </div>
+  </div>
+</AdminLayout>
