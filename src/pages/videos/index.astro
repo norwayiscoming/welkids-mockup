@@ -1,0 +1,344 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import VideoCard from '../../components/VideoCard.astro';
+import videos from '../../data/videos.json';
+
+const categories = ['Tất cả', ...new Set(videos.map((v) => v.category))];
+---
+
+<MainLayout title="Lớp Học Dinh Dưỡng">
+  <!-- Header Section -->
+  <section class="section bg-gradient-green">
+    <div class="container text-center">
+      <SectionHeader
+        title="Lớp Học Dinh Dưỡng"
+        subtitle="Xem các video hướng dẫn chăm sóc sức khỏe cho bé từ chuyên gia dinh dưỡng"
+        align="center"
+      />
+
+      <!-- Search Bar -->
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          id="search-input"
+          class="search-input frost-glass"
+          type="text"
+          placeholder="Tìm kiếm video..."
+          aria-label="Tìm kiếm video"
+        />
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills" role="group" aria-label="Lọc theo danh mục">
+        {categories.map((cat, i) => (
+          <button
+            class={`pill frost-glass${i === 0 ? ' pill--active' : ''}`}
+            data-category={cat}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="video-grid" id="video-grid">
+        {videos.map((video) => (
+          <div
+            class="video-card-wrapper"
+            data-category={video.category}
+            data-title={video.title}
+            data-description={video.description}
+            data-duration={video.duration}
+          >
+            <VideoCard
+              title={video.title}
+              category={video.category}
+              duration={video.duration}
+              description={video.description}
+            />
+          </div>
+        ))}
+      </div>
+      <p class="no-results" id="no-results" style="display:none;">Không tìm thấy video phù hợp.</p>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div class="modal-overlay" id="modal-overlay" aria-modal="true" role="dialog" aria-label="Xem video" style="display:none;">
+    <div class="modal-panel leaf-glass">
+      <button class="modal-close" id="modal-close" aria-label="Đóng">✕</button>
+      <div class="modal-video-placeholder">
+        <span class="modal-play-icon">▶</span>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <p class="modal-description" id="modal-description"></p>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  /* Search */
+  .search-wrapper {
+    position: relative;
+    max-width: 480px;
+    margin: 32px auto 24px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding: 12px 24px 12px 48px;
+    font-size: 15px;
+    color: var(--color-heading);
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .search-input::placeholder {
+    color: var(--color-muted);
+  }
+
+  /* Filter Pills */
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .pill {
+    border-radius: var(--radius-pill);
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: var(--color-heading);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    border: none;
+  }
+
+  .pill:hover {
+    transform: translateY(-1px);
+  }
+
+  .pill--active {
+    background: var(--color-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(94, 170, 110, 0.35);
+  }
+
+  /* Video Grid */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .video-card-wrapper {
+    cursor: pointer;
+  }
+
+  .no-results {
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 15px;
+    padding: 40px 0;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-panel {
+    width: 100%;
+    max-width: 700px;
+    border-radius: var(--radius-card-lg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    border: none;
+    font-size: 16px;
+    color: var(--color-heading);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .modal-video-placeholder {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: linear-gradient(135deg, #2D4A35 0%, #3D8B4F 60%, #5EAA6E 100%);
+  }
+
+  .modal-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 52px;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .modal-description {
+    font-size: 14px;
+    color: var(--color-body);
+    line-height: 1.7;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-pills {
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 7px 16px;
+      font-size: 12px;
+    }
+  }
+</style>
+
+<script>
+  const pills = document.querySelectorAll<HTMLButtonElement>('.pill');
+  const cards = document.querySelectorAll<HTMLElement>('.video-card-wrapper');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const noResults = document.getElementById('no-results') as HTMLElement;
+  const overlay = document.getElementById('modal-overlay') as HTMLElement;
+  const modalClose = document.getElementById('modal-close') as HTMLButtonElement;
+  const modalTitle = document.getElementById('modal-title') as HTMLElement;
+  const modalDescription = document.getElementById('modal-description') as HTMLElement;
+
+  let activeCategory = 'Tất cả';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    cards.forEach((card) => {
+      const cat = card.dataset.category ?? '';
+      const title = (card.dataset.title ?? '').toLowerCase();
+      const matchCat = activeCategory === 'Tất cả' || cat === activeCategory;
+      const matchSearch = title.includes(searchQuery);
+      const show = matchCat && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // Category filter
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      pills.forEach((p) => {
+        p.classList.remove('pill--active');
+        p.setAttribute('aria-pressed', 'false');
+      });
+      pill.classList.add('pill--active');
+      pill.setAttribute('aria-pressed', 'true');
+      activeCategory = pill.dataset.category ?? 'Tất cả';
+      applyFilters();
+    });
+  });
+
+  // Search
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    applyFilters();
+  });
+
+  // Modal open
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      modalTitle.textContent = card.dataset.title ?? '';
+      modalDescription.textContent = card.dataset.description ?? '';
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Modal close
+  function closeModal() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
