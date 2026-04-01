@@ -1,0 +1,10 @@
+{
+  "name": "welkids-backend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Backend not yet implemented'",
+    "build": "echo 'Backend not yet implemented'",
+    "start": "echo 'Backend not yet implemented'"
+  }
+}
