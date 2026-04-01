@@ -1,0 +1,514 @@
+/* ============================================================
+   WelKids Design System — Global CSS
+   ============================================================ */
+
+/* 1. Google Fonts Import
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
+
+
+/* 2. CSS Custom Properties
+   ============================================================ */
+:root {
+  /* Neutrals (60%) */
+  --color-cream: #FAFDF9;
+  --color-mint-gray: #F0F5F1;
+  --color-leaf-gray: #E3ECE5;
+  --color-white: #FFFFFF;
+
+  /* Primary (30%) */
+  --color-primary-dark: #3D8B4F;
+  --color-primary: #5EAA6E;
+  --color-primary-light: #7DC08A;
+  --color-primary-tint: #D4EDDA;
+
+  /* Accent (10%) */
+  --color-accent-dark: #E8AA20;
+  --color-accent: #F5C842;
+  --color-accent-light: #F8D76E;
+  --color-accent-tint: #FFF8E1;
+
+  /* Warm */
+  --color-warm: #FFB74D;
+  --color-warm-dark: #E69520;
+  --color-warm-light: #FFCC80;
+
+  /* Text */
+  --color-heading: #2D4A35;
+  --color-body: #5A7D66;
+  --color-muted: #9AB5A3;
+
+  /* Semantic */
+  --color-error: #E57373;
+  --color-error-tint: #FDECEA;
+
+  /* Typography */
+  --font-heading: 'Montserrat Alternates', sans-serif;
+  --font-body: 'Quicksand', sans-serif;
+
+  /* Spacing */
+  --spacing-micro: 4px;
+  --spacing-tight: 8px;
+  --spacing-base: 16px;
+  --spacing-comfortable: 24px;
+  --spacing-spacious: 32px;
+  --spacing-section: 48px;
+  --spacing-page: 72px;
+
+  /* Border Radius */
+  --radius-input: 12px;
+  --radius-icon: 16px;
+  --radius-card: 20px;
+  --radius-card-lg: 24px;
+  --radius-pill: 50px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(61, 139, 79, 0.08), 0 1px 2px rgba(61, 139, 79, 0.04);
+  --shadow-2: 0 4px 6px rgba(61, 139, 79, 0.08), 0 2px 4px rgba(61, 139, 79, 0.06);
+  --shadow-3: 0 10px 15px rgba(61, 139, 79, 0.10), 0 4px 6px rgba(61, 139, 79, 0.06);
+  --shadow-4: 0 20px 25px rgba(61, 139, 79, 0.12), 0 10px 10px rgba(61, 139, 79, 0.08);
+
+  /* Layout */
+  --max-width: 1200px;
+  --container-padding: 24px;
+}
+
+
+/* 3. CSS Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* 4. Base Typography
+   ============================================================ */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-body);
+  background-color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2 {
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h3 {
+  font-family: var(--font-body);
+  color: var(--color-heading);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  color: var(--color-body);
+  line-height: 1.7;
+}
+
+
+/* 5. Container and Section Utilities
+   ============================================================ */
+.container {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  width: 100%;
+}
+
+.section {
+  padding-block: var(--spacing-section);
+}
+
+.section-lg {
+  padding-block: var(--spacing-page);
+}
+
+
+/* 6. Glass Effects
+   ============================================================ */
+
+/* Leaf Glass — white/green tinted */
+.leaf-glass {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 8px 32px rgba(61, 139, 79, 0.12);
+  border-radius: var(--radius-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.leaf-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(94, 170, 110, 0.6) 0%,
+    rgba(125, 192, 138, 0.3) 40%,
+    rgba(255, 255, 255, 0.15) 70%,
+    rgba(94, 170, 110, 0.4) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Warm Glass — cream/yellow tinted */
+.warm-glass {
+  background: rgba(255, 248, 225, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 8px 32px rgba(232, 170, 32, 0.12);
+  border-radius: var(--radius-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.warm-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 200, 66, 0.7) 0%,
+    rgba(248, 215, 110, 0.4) 40%,
+    rgba(255, 255, 255, 0.2) 70%,
+    rgba(245, 200, 66, 0.5) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Frost Glass — pure white/subtle */
+.frost-glass {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 8px 32px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.frost-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.1) 70%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+
+/* 7. Animations
+   ============================================================ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.animate-float-delay-2 {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* 8. Utility Classes
+   ============================================================ */
+.text-heading {
+  color: var(--color-heading);
+}
+
+.text-body {
+  color: var(--color-body);
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+/* 9. Gradient Background Classes
+   ============================================================ */
+.bg-gradient-green {
+  background: linear-gradient(
+    160deg,
+    var(--color-primary-tint) 0%,
+    var(--color-mint-gray) 50%,
+    var(--color-cream) 100%
+  );
+}
+
+.bg-gradient-hero {
+  background: linear-gradient(
+    150deg,
+    #E8F5EC 0%,
+    #F0F5F1 30%,
+    #FAFDF9 60%,
+    #FFF8E1 100%
+  );
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(
+    160deg,
+    var(--color-accent-tint) 0%,
+    var(--color-mint-gray) 60%,
+    var(--color-cream) 100%
+  );
+}
+
+
+/* 10. Decorative Blob Classes
+   ============================================================ */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.blob-green {
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(94, 170, 110, 0.35) 0%,
+    rgba(94, 170, 110, 0.1) 50%,
+    transparent 70%
+  );
+}
+
+.blob-yellow {
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(245, 200, 66, 0.35) 0%,
+    rgba(245, 200, 66, 0.1) 50%,
+    transparent 70%
+  );
+}
+
+.blob-white {
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+}
+
+
+/* 11. Responsive Breakpoints
+   ============================================================ */
+
+/* Tablet — max-width: 1024px */
+@media (max-width: 1024px) {
+  :root {
+    --container-padding: 20px;
+    --spacing-section: 40px;
+    --spacing-page: 60px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+}
+
+/* Mobile — max-width: 640px */
+@media (max-width: 640px) {
+  :root {
+    --container-padding: 16px;
+    --spacing-section: 32px;
+    --spacing-page: 48px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  body {
+    font-size: 15px;
+  }
+}
