@@ -1,0 +1,10 @@
+[
+  { "id": 1, "emoji": "🩺", "label": "Bác sĩ" },
+  { "id": 2, "emoji": "🚀", "label": "Phi hành gia" },
+  { "id": 3, "emoji": "👨‍🍳", "label": "Đầu bếp" },
+  { "id": 4, "emoji": "🎤", "label": "Ca sĩ" },
+  { "id": 5, "emoji": "🎨", "label": "Họa sĩ" },
+  { "id": 6, "emoji": "👩‍🏫", "label": "Giáo viên" },
+  { "id": 7, "emoji": "⚙️", "label": "Kỹ sư" },
+  { "id": 8, "emoji": "✈️", "label": "Phi công" }
+]

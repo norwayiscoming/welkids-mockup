@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "question": "Bé bao nhiêu tuổi?",
+    "subtitle": "Chọn nhóm tuổi phù hợp với bé",
+    "options": [
+      { "emoji": "👶", "label": "0-6 tháng" },
+      { "emoji": "🍼", "label": "6-12 tháng" },
+      { "emoji": "🧒", "label": "1-3 tuổi" },
+      { "emoji": "👦", "label": "3-6 tuổi" }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "Chế độ ăn của bé?",
+    "subtitle": "Bé thường ăn gì trong bữa chính?",
+    "options": [
+      { "emoji": "🥦", "label": "Rau củ đa dạng" },
+      { "emoji": "🍚", "label": "Cơm/cháo chủ yếu" },
+      { "emoji": "🥛", "label": "Sữa là chính" },
+      { "emoji": "🍖", "label": "Thịt cá đầy đủ" }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "Bé có hay ốm vặt không?",
+    "subtitle": "Tần suất bé bị ốm trong 6 tháng gần đây",
+    "options": [
+      { "emoji": "💪", "label": "Rất ít" },
+      { "emoji": "🤧", "label": "Thỉnh thoảng" },
+      { "emoji": "🤒", "label": "Thường xuyên" },
+      { "emoji": "😷", "label": "Rất thường xuyên" }
+    ]
+  },
+  {
+    "id": 4,
+    "question": "Bé có tiếp xúc ánh nắng thường xuyên?",
+    "subtitle": "Ánh nắng giúp tổng hợp Vitamin D3 tự nhiên",
+    "options": [
+      { "emoji": "☀️", "label": "Hàng ngày" },
+      { "emoji": "🌤️", "label": "2-3 lần/tuần" },
+      { "emoji": "☁️", "label": "Hiếm khi" },
+      { "emoji": "🏠", "label": "Không" }
+    ]
+  },
+  {
+    "id": 5,
+    "question": "Bé có đang bổ sung vitamin?",
+    "subtitle": "Tình trạng bổ sung vitamin hiện tại của bé",
+    "options": [
+      { "emoji": "✅", "label": "Có đầy đủ" },
+      { "emoji": "⚠️", "label": "Có không đều" },
+      { "emoji": "❌", "label": "Chưa bổ sung" },
+      { "emoji": "❓", "label": "Không biết" }
+    ]
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Nguyễn Minh Anh",
+    "career": "Phi hành gia",
+    "ticket": "WK-2024-001",
+    "award": "first",
+    "hasVideo": true
+  },
+  {
+    "id": 2,
+    "name": "Trần Gia Bảo",
+    "career": "Bác sĩ",
+    "ticket": "WK-2024-002",
+    "award": "second",
+    "hasVideo": true
+  },
+  {
+    "id": 3,
+    "name": "Lê Phương Linh",
+    "career": "Ca sĩ",
+    "ticket": "WK-2024-003",
+    "award": "third",
+    "hasVideo": true
+  },
+  {
+    "id": 4,
+    "name": "Phạm Quốc Hùng",
+    "career": "Đầu bếp",
+    "ticket": "WK-2024-004",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 5,
+    "name": "Hoàng Thị Thu",
+    "career": "Giáo viên",
+    "ticket": "WK-2024-005",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 6,
+    "name": "Vũ Đức Khải",
+    "career": "Kỹ sư",
+    "ticket": "WK-2024-006",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 7,
+    "name": "Đặng Ngọc Mai",
+    "career": "Họa sĩ",
+    "ticket": "WK-2024-007",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 8,
+    "name": "Bùi Thanh Tùng",
+    "career": "Phi công",
+    "ticket": "WK-2024-008",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 9,
+    "name": "Ngô Hải Yến",
+    "career": "Ca sĩ",
+    "ticket": "WK-2024-009",
+    "award": null,
+    "hasVideo": false
+  },
+  {
+    "id": 10,
+    "name": "Đinh Văn Long",
+    "career": "Bác sĩ",
+    "ticket": "WK-2024-010",
+    "award": null,
+    "hasVideo": false
+  }
+]

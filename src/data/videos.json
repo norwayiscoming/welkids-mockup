@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "title": "Tầm quan trọng của Vitamin D3 cho trẻ",
+    "category": "Vitamin & Khoáng chất",
+    "duration": "5:30",
+    "description": "Tìm hiểu tại sao Vitamin D3 đóng vai trò thiết yếu trong sự phát triển xương và hệ miễn dịch của trẻ nhỏ."
+  },
+  {
+    "id": 2,
+    "title": "Cách xây dựng thực đơn dinh dưỡng cho bé 1-3 tuổi",
+    "category": "Thực đơn cho bé",
+    "duration": "8:15",
+    "description": "Hướng dẫn chi tiết cách lên thực đơn cân bằng đủ chất dinh dưỡng cho bé trong giai đoạn phát triển vàng 1-3 tuổi."
+  },
+  {
+    "id": 3,
+    "title": "Vitamin K2 và sự phát triển xương",
+    "category": "Vitamin & Khoáng chất",
+    "duration": "4:45",
+    "description": "Khám phá vai trò của Vitamin K2 trong việc hỗ trợ canxi đến đúng chỗ, giúp xương chắc khỏe và ngăn ngừa còi xương."
+  },
+  {
+    "id": 4,
+    "title": "Hỏi đáp cùng bác sĩ: Miễn dịch trẻ nhỏ",
+    "category": "Chuyên gia tư vấn",
+    "duration": "12:00",
+    "description": "Bác sĩ nhi khoa trả lời những câu hỏi thường gặp về cách tăng cường sức đề kháng và bảo vệ hệ miễn dịch cho trẻ nhỏ."
+  },
+  {
+    "id": 5,
+    "title": "5 dấu hiệu bé thiếu vitamin A",
+    "category": "Dinh dưỡng cơ bản",
+    "duration": "3:50",
+    "description": "Nhận biết sớm 5 dấu hiệu cảnh báo thiếu hụt Vitamin A ở trẻ để có biện pháp bổ sung kịp thời và hiệu quả."
+  },
+  {
+    "id": 6,
+    "title": "Hướng dẫn bổ sung vitamin đúng cách",
+    "category": "Dinh dưỡng cơ bản",
+    "duration": "6:20",
+    "description": "Những nguyên tắc quan trọng khi bổ sung vitamin cho trẻ, bao gồm liều lượng, thời điểm và cách kết hợp các loại vitamin hiệu quả."
+  },
+  {
+    "id": 7,
+    "title": "Dinh dưỡng cho bé trong mùa dịch",
+    "category": "Chuyên gia tư vấn",
+    "duration": "9:10",
+    "description": "Chuyên gia dinh dưỡng chia sẻ cách tăng cường sức đề kháng cho bé thông qua chế độ ăn uống trong mùa dịch bệnh."
+  },
+  {
+    "id": 8,
+    "title": "Thực đơn ăn dặm giàu vitamin cho bé 6-12 tháng",
+    "category": "Thực đơn cho bé",
+    "duration": "7:40",
+    "description": "Gợi ý thực đơn ăn dặm phong phú, giàu vitamin và khoáng chất giúp bé 6-12 tháng phát triển toàn diện ngay từ những bữa ăn đầu tiên."
+  }
+]
