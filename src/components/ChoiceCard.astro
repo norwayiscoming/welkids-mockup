@@ -1,0 +1,73 @@
+---
+interface Props {
+  emoji: string;
+  label: string;
+  selected?: boolean;
+  value: string;
+}
+
+const { emoji, label, selected = false, value } = Astro.props;
+---
+
+<button
+  class={`choice-card frost-glass${selected ? ' selected' : ''}`}
+  data-value={value}
+  type="button"
+>
+  <span class="choice-emoji">{emoji}</span>
+  <span class="choice-label">{selected ? '✓ Đã chọn' : label}</span>
+</button>
+
+<style>
+  .choice-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 12px;
+    border-radius: 16px;
+    border: 2px solid var(--color-leaf-gray);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.1s ease;
+    width: 100%;
+    font-family: var(--font-body);
+  }
+
+  .choice-card:hover {
+    background: rgba(212, 237, 218, 0.45);
+    border-color: var(--color-primary-light);
+  }
+
+  .choice-card:active {
+    transform: translateY(1px);
+  }
+
+  .choice-card.selected {
+    background: rgba(94, 170, 110, 0.18);
+    border-color: var(--color-primary);
+  }
+
+  .choice-emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .choice-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-heading);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-card.selected .choice-label {
+    color: var(--color-primary-dark);
+  }
+</style>

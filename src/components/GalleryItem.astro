@@ -1,0 +1,159 @@
+---
+interface Props {
+  name: string;
+  career: string;
+  ticket: string;
+  award: string | null;
+  hasVideo: boolean;
+}
+
+const { name, career, ticket, award, hasVideo } = Astro.props;
+
+const awardEmoji = award === '1' ? '🥇' : award === '2' ? '🥈' : award === '3' ? '🥉' : null;
+const awardLabel = awardEmoji ? `${awardEmoji} Giải ${award === '1' ? 'Nhất' : award === '2' ? 'Nhì' : 'Ba'}` : null;
+---
+
+<div class={`gallery-item leaf-glass${hasVideo ? ' has-video' : ''}`}>
+  <!-- Image area -->
+  <div class="gallery-image">
+    <div class="gallery-placeholder">
+      <span class="gallery-emoji">🎨</span>
+    </div>
+
+    {awardLabel && (
+      <span class="award-badge frost-glass">{awardLabel}</span>
+    )}
+
+    {hasVideo && (
+      <div class="video-overlay">
+        <button class="play-btn frost-glass" aria-label="Play video">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+      </div>
+    )}
+  </div>
+
+  <!-- Info -->
+  <div class="gallery-info">
+    <span class="gallery-name">{name}</span>
+    <span class="gallery-career">{career}</span>
+    <span class="gallery-ticket">{ticket}</span>
+  </div>
+</div>
+
+<style>
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(61, 139, 79, 0.16);
+  }
+
+  .gallery-image {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 ratio */
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .gallery-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary-tint) 0%, rgba(125, 192, 138, 0.4) 60%, var(--color-primary-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-emoji {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .award-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 50px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-heading);
+    z-index: 2;
+    font-family: var(--font-body);
+  }
+
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 1;
+  }
+
+  .gallery-item.has-video:hover .video-overlay {
+    opacity: 1;
+  }
+
+  .play-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-heading);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .play-btn svg {
+    margin-left: 2px;
+  }
+
+  .gallery-info {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .gallery-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    line-height: 1.3;
+  }
+
+  .gallery-career {
+    font-size: 13px;
+    color: var(--color-primary);
+    font-weight: 500;
+    font-family: var(--font-body);
+  }
+
+  .gallery-ticket {
+    font-size: 11px;
+    color: var(--color-muted);
+    font-family: var(--font-body);
+  }
+</style>

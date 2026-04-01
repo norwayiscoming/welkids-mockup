@@ -1,0 +1,180 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  badge?: string;
+  badgeVariant?: 'primary' | 'accent' | 'muted';
+  gradient: string;
+  href?: string;
+  buttonLabel?: string;
+  buttonVariant?: 'primary' | 'accent' | 'secondary';
+  glassVariant?: 'leaf' | 'warm';
+}
+
+const {
+  title,
+  description,
+  icon,
+  badge,
+  badgeVariant = 'primary',
+  gradient,
+  href,
+  buttonLabel,
+  buttonVariant = 'primary',
+  glassVariant = 'leaf',
+} = Astro.props;
+
+const glassClass = glassVariant === 'warm' ? 'warm-glass' : 'leaf-glass';
+---
+
+<div class={`card ${glassClass}`}>
+  <!-- Header -->
+  <div class="card-header" style={`background: ${gradient};`}>
+    <div class="card-icon frost-glass animate-float-slow">
+      <span>{icon}</span>
+    </div>
+    {badge && (
+      <span class={`card-badge frost-glass badge-${badgeVariant}`}>{badge}</span>
+    )}
+  </div>
+
+  <!-- Body -->
+  <div class="card-body">
+    <h3 class="card-title">{title}</h3>
+    <p class="card-description">{description}</p>
+    {buttonLabel && href && (
+      <a href={href} class={`card-btn card-btn-${buttonVariant}`}>{buttonLabel}</a>
+    )}
+    {buttonLabel && !href && (
+      <button class={`card-btn card-btn-${buttonVariant}`}>{buttonLabel}</button>
+    )}
+  </div>
+</div>
+
+<style>
+  .card {
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header {
+    height: 160px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    z-index: 1;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .badge-primary {
+    color: var(--color-primary-dark);
+  }
+
+  .badge-accent {
+    color: var(--color-accent-dark);
+  }
+
+  .badge-muted {
+    color: var(--color-muted);
+  }
+
+  .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-heading);
+    line-height: 1.3;
+  }
+
+  .card-description {
+    font-size: 13px;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: filter 0.2s ease, transform 0.1s ease;
+    margin-top: 8px;
+    align-self: flex-start;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .card-btn:active {
+    transform: translateY(2px);
+  }
+
+  .card-btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, #6DB87A 0%, #5EAA6E 50%, #4F9C60 100%);
+    box-shadow: 0 2px 0 #3D8B4F;
+  }
+  .card-btn-primary:hover {
+    filter: brightness(1.06);
+  }
+
+  .card-btn-accent {
+    color: #2D4A35;
+    background: linear-gradient(180deg, #F8D76E 0%, #F5C842 50%, #E8B830 100%);
+    box-shadow: 0 2px 0 #D4A520;
+  }
+  .card-btn-accent:hover {
+    filter: brightness(1.04);
+  }
+
+  .card-btn-secondary {
+    color: var(--color-primary-dark);
+    background: #fff;
+    border: 2px solid #C8E0CC;
+    box-shadow: 0 2px 0 #C8E0CC;
+  }
+  .card-btn-secondary:hover {
+    background: var(--color-mint-gray);
+    border-color: var(--color-primary-light);
+  }
+</style>
