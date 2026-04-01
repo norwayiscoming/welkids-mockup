@@ -1,0 +1,389 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import questions from '../../data/questions.json';
+---
+
+<MainLayout title="Bảng Hỏi Sức Khỏe">
+  <section class="section quiz-section">
+    <!-- Decorative blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+      <div class="quiz-wrapper">
+        <!-- Progress bar (static shell, updated by JS) -->
+        <div class="progress-area">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill" style="width: 20%;"></div>
+          </div>
+          <span class="progress-label" id="progress-label">1/{questions.length}</span>
+        </div>
+
+        <!-- Main panel -->
+        <div class="leaf-glass quiz-panel">
+          {questions.map((q, index) => (
+            <div
+              class="step"
+              id={`step-${index}`}
+              style={index === 0 ? '' : 'display: none;'}
+            >
+              <h2 class="question-title">{q.question}</h2>
+              <p class="question-subtitle">{q.subtitle}</p>
+
+              <div class="choices-grid">
+                {q.options.map((opt) => (
+                  <button
+                    class="choice-card frost-glass"
+                    data-value={opt.label}
+                    type="button"
+                  >
+                    <span class="choice-emoji">{opt.emoji}</span>
+                    <span class="choice-label">{opt.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <!-- Navigation -->
+          <div class="nav-row">
+            <button class="btn btn-ghost btn-md" id="btn-back" type="button" disabled>
+              ← Quay lại
+            </button>
+            <button class="btn btn-primary btn-md" id="btn-next" type="button" disabled>
+              Tiếp tục →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<script define:vars={{ total: questions.length }}>
+  let currentStep = 0;
+  const answers = new Array(total).fill(null);
+
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  const btnBack = document.getElementById('btn-back');
+  const btnNext = document.getElementById('btn-next');
+
+  function getStep(index) {
+    return document.getElementById(`step-${index}`);
+  }
+
+  function updateProgress() {
+    const pct = ((currentStep + 1) / total) * 100;
+    progressFill.style.width = `${pct}%`;
+    progressLabel.textContent = `${currentStep + 1}/${total}`;
+  }
+
+  function updateNav() {
+    // Back button
+    btnBack.disabled = currentStep === 0;
+
+    // Next button — enabled only if this step has a selection
+    const hasSelection = answers[currentStep] !== null;
+    btnNext.disabled = !hasSelection;
+
+    // Last step: change label
+    if (currentStep === total - 1) {
+      btnNext.textContent = 'Xem kết quả';
+    } else {
+      btnNext.textContent = 'Tiếp tục →';
+    }
+  }
+
+  function showStep(index) {
+    for (let i = 0; i < total; i++) {
+      const s = getStep(i);
+      if (s) s.style.display = i === index ? '' : 'none';
+    }
+    currentStep = index;
+    updateProgress();
+    updateNav();
+  }
+
+  // Choice card click handler (delegated)
+  document.querySelector('.quiz-panel').addEventListener('click', (e) => {
+    const card = e.target.closest('.choice-card');
+    if (!card) return;
+
+    // Find the step this card belongs to
+    const stepEl = card.closest('.step');
+    if (!stepEl) return;
+    const stepIndex = parseInt(stepEl.id.replace('step-', ''), 10);
+    if (stepIndex !== currentStep) return;
+
+    // Deselect siblings
+    stepEl.querySelectorAll('.choice-card').forEach((c) => {
+      c.classList.remove('selected');
+      const lbl = c.querySelector('.choice-label');
+      if (lbl) lbl.textContent = c.dataset.value;
+    });
+
+    // Select clicked
+    card.classList.add('selected');
+    const lbl = card.querySelector('.choice-label');
+    if (lbl) lbl.textContent = '✓ Đã chọn';
+
+    answers[currentStep] = card.dataset.value;
+    updateNav();
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (btnNext.disabled) return;
+    if (currentStep === total - 1) {
+      window.location.href = '/health-check/results/';
+      return;
+    }
+    showStep(currentStep + 1);
+  });
+
+  btnBack.addEventListener('click', () => {
+    if (currentStep > 0) {
+      showStep(currentStep - 1);
+    }
+  });
+
+  // Init
+  updateProgress();
+  updateNav();
+</script>
+
+<style>
+  .quiz-section {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    background: linear-gradient(160deg, #E8F5EC 0%, #D4EDDA 40%, #C3E6CB 100%);
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob-1 {
+    width: 350px;
+    height: 350px;
+    background: rgba(94, 170, 110, 0.22);
+    top: -80px;
+    left: -100px;
+  }
+
+  .blob-2 {
+    width: 280px;
+    height: 280px;
+    background: rgba(245, 200, 66, 0.18);
+    bottom: -60px;
+    right: -60px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .quiz-wrapper {
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Progress bar */
+  .progress-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .progress-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(94, 170, 110, 0.18);
+    border-radius: 50px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary-dark));
+    border-radius: 50px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    white-space: nowrap;
+    font-family: var(--font-body);
+  }
+
+  /* Panel */
+  .quiz-panel {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Question */
+  .question-title {
+    font-size: 22px;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .question-subtitle {
+    font-size: 14px;
+    color: var(--color-body);
+    margin: 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Choice grid */
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Choice card */
+  .choice-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 12px;
+    border-radius: 16px;
+    border: 2px solid var(--color-leaf-gray);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.1s ease;
+    width: 100%;
+    font-family: var(--font-body);
+  }
+
+  .choice-card:hover {
+    background: rgba(212, 237, 218, 0.45);
+    border-color: var(--color-primary-light);
+  }
+
+  .choice-card:active {
+    transform: translateY(1px);
+  }
+
+  .choice-card.selected {
+    background: rgba(94, 170, 110, 0.18);
+    border-color: var(--color-primary);
+  }
+
+  .choice-emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .choice-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-heading);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .choice-card.selected .choice-label {
+    color: var(--color-primary-dark);
+  }
+
+  /* Navigation */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Button styles (duplicated from Button component for inline use) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition:
+      filter 0.2s ease,
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn:active {
+    transform: translateY(2px);
+  }
+
+  .btn-md {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, #6DB87A 0%, #5EAA6E 50%, #4F9C60 100%);
+    box-shadow: 0 2px 0 #3D8B4F;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.06);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    color: var(--color-body);
+    background: var(--color-mint-gray);
+    box-shadow: 0 2px 0 #DCE5DD;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-leaf-gray);
+    color: var(--color-heading);
+  }
+
+  .btn-ghost:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+</style>

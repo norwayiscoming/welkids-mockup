@@ -1,0 +1,420 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Kết Quả Kiểm Tra">
+  <section class="section results-section">
+    <!-- Decorative blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+      <div class="results-wrapper">
+
+        <!-- ── a) Biểu đồ dinh dưỡng ── -->
+        <div class="leaf-glass results-panel">
+          <h2 class="panel-heading">Kết Quả Đánh Giá</h2>
+
+          <div class="chart-list">
+
+            <div class="chart-row">
+              <span class="chart-label">Vitamin A</span>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill color-yellow" style="width: 65%;"></div>
+              </div>
+              <span class="chart-pct color-yellow">65%</span>
+            </div>
+
+            <div class="chart-row">
+              <span class="chart-label">Vitamin D₃</span>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill color-red" style="width: 40%;"></div>
+              </div>
+              <span class="chart-pct color-red">40%</span>
+            </div>
+
+            <div class="chart-row">
+              <span class="chart-label">Vitamin E</span>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill color-green" style="width: 80%;"></div>
+              </div>
+              <span class="chart-pct color-green">80%</span>
+            </div>
+
+            <div class="chart-row">
+              <span class="chart-label">Vitamin K₂</span>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill color-red" style="width: 45%;"></div>
+              </div>
+              <span class="chart-pct color-red">45%</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── b) Kết luận ── -->
+        <div class="leaf-glass results-panel">
+          <h3 class="panel-subheading">Nhận Xét</h3>
+          <p class="summary-text">
+            Bé có dấu hiệu thiếu hụt Vitamin D₃ và K₂ ở mức đáng lo ngại. Vitamin A đang ở
+            ngưỡng trung bình và cần được theo dõi thêm. Cần bổ sung kịp thời để đảm bảo
+            sự phát triển toàn diện cho bé.
+          </p>
+
+          <div class="highlights">
+            <div class="highlight-box accent-tint">
+              <span class="highlight-icon">⚠️</span>
+              <p>Vitamin D₃ thấp hơn mức cần thiết — bé ít tiếp xúc ánh nắng và chưa được bổ sung đầy đủ.</p>
+            </div>
+            <div class="highlight-box error-tint">
+              <span class="highlight-icon">🦷</span>
+              <p>Vitamin K₂ thiếu hụt ảnh hưởng đến khả năng hấp thu canxi và sức khỏe xương răng của bé.</p>
+            </div>
+          </div>
+
+          <div class="status-badge frost-glass">
+            <span>⚡</span>
+            <span>Cần bổ sung vitamin</span>
+          </div>
+        </div>
+
+        <!-- ── c) Đề xuất sản phẩm ── -->
+        <div class="leaf-glass results-panel">
+          <h3 class="panel-subheading">Sản Phẩm Phù Hợp</h3>
+
+          <div class="product-card leaf-glass">
+            <!-- Image placeholder -->
+            <div class="product-img-placeholder">
+              <span class="product-img-label">WelKids<br/>AD₃EK₂</span>
+            </div>
+
+            <div class="product-info">
+              <h3 class="product-name">WelKids AD₃ E K₂</h3>
+              <ul class="benefits-list">
+                <li>✅ Bổ sung Vitamin D₃ & K₂ cho xương chắc khỏe</li>
+                <li>✅ Vitamin A hỗ trợ thị lực và miễn dịch</li>
+                <li>✅ Vitamin E chống oxy hóa, bảo vệ tế bào</li>
+                <li>✅ Dạng nhỏ giọt dễ dùng cho mọi lứa tuổi</li>
+              </ul>
+              <div class="product-actions">
+                <a href="/products/" class="btn btn-ghost btn-sm">Tìm hiểu thêm</a>
+                <a href="/products/" class="btn btn-primary btn-sm">Mua ngay</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── d) Bottom actions ── -->
+        <div class="bottom-actions">
+          <button class="btn btn-accent btn-md" type="button">Chia sẻ kết quả</button>
+          <a href="/health-check/" class="btn btn-ghost btn-md">Làm lại bài kiểm tra</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .results-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #E8F5EC 0%, #D4EDDA 40%, #C3E6CB 100%);
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob-1 {
+    width: 380px;
+    height: 380px;
+    background: rgba(94, 170, 110, 0.22);
+    top: -100px;
+    left: -100px;
+  }
+
+  .blob-2 {
+    width: 300px;
+    height: 300px;
+    background: rgba(245, 200, 66, 0.18);
+    bottom: 0;
+    right: -80px;
+  }
+
+  .blob-3 {
+    width: 220px;
+    height: 220px;
+    background: rgba(125, 192, 138, 0.15);
+    top: 40%;
+    right: 8%;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .results-wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Panel shared */
+  .results-panel {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .panel-heading {
+    font-size: 24px;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .panel-subheading {
+    font-size: 18px;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  /* ── Bar chart ── */
+  .chart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .chart-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chart-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-heading);
+    width: 90px;
+    flex-shrink: 0;
+    font-family: var(--font-body);
+  }
+
+  .chart-bar-track {
+    flex: 1;
+    height: 14px;
+    background: rgba(94, 170, 110, 0.12);
+    border-radius: 50px;
+    overflow: hidden;
+  }
+
+  .chart-bar-fill {
+    height: 100%;
+    border-radius: 50px;
+    transition: width 0.6s ease;
+  }
+
+  .chart-pct {
+    font-size: 12px;
+    font-weight: 700;
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+    font-family: var(--font-body);
+  }
+
+  /* Colors */
+  .color-green { background: var(--color-primary); color: var(--color-primary-dark); }
+  .color-yellow { background: var(--color-accent); color: var(--color-accent-dark); }
+  .color-red { background: var(--color-error); color: #C62828; }
+
+  /* ── Kết luận ── */
+  .summary-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-body);
+    margin: 0;
+  }
+
+  .highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .highlight-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-card);
+  }
+
+  .highlight-box.accent-tint {
+    background: var(--color-accent-tint);
+  }
+
+  .highlight-box.error-tint {
+    background: var(--color-error-tint);
+  }
+
+  .highlight-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  .highlight-box p {
+    font-size: 13px;
+    color: var(--color-heading);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-heading);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(94, 170, 110, 0.25);
+    align-self: flex-start;
+  }
+
+  /* ── Product card ── */
+  .product-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .product-img-placeholder {
+    width: 100px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: var(--radius-card);
+    background: linear-gradient(160deg, #6DB87A 0%, #3D8B4F 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .product-img-label {
+    padding: 4px;
+  }
+
+  .product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .product-name {
+    font-size: 17px;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .benefits-list li {
+    font-size: 13px;
+    color: var(--color-body);
+    line-height: 1.5;
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Bottom actions ── */
+  .bottom-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition:
+      filter 0.2s ease,
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn:active { transform: translateY(2px); }
+
+  .btn-sm { font-size: 13px; padding: 8px 16px; }
+  .btn-md { font-size: 15px; padding: 12px 24px; }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, #6DB87A 0%, #5EAA6E 50%, #4F9C60 100%);
+    box-shadow: 0 2px 0 #3D8B4F;
+  }
+  .btn-primary:hover { filter: brightness(1.06); }
+
+  .btn-accent {
+    color: #2D4A35;
+    background: linear-gradient(180deg, #F8D76E 0%, #F5C842 50%, #E8B830 100%);
+    box-shadow: 0 2px 0 #D4A520;
+  }
+  .btn-accent:hover { filter: brightness(1.04); }
+
+  .btn-ghost {
+    color: var(--color-body);
+    background: var(--color-mint-gray);
+    box-shadow: 0 2px 0 #DCE5DD;
+  }
+  .btn-ghost:hover {
+    background: var(--color-leaf-gray);
+    color: var(--color-heading);
+  }
+</style>

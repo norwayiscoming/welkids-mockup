@@ -1,0 +1,174 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Button from '../../components/Button.astro';
+---
+
+<MainLayout title="Kiểm Tra Dinh Dưỡng">
+  <section class="section bg-gradient-green hero-section">
+    <!-- Decorative blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+      <div class="panel-wrapper">
+        <div class="leaf-glass intro-panel">
+          <!-- Icon -->
+          <div class="icon-box-wrapper">
+            <div class="icon-glass-box float-anim">
+              <span class="icon-emoji">🩺</span>
+            </div>
+          </div>
+
+          <h1 class="panel-title">Kiểm Tra Dinh Dưỡng</h1>
+          <p class="panel-subtitle">
+            Đánh giá nhanh tình trạng dinh dưỡng của bé chỉ trong 2 phút
+          </p>
+
+          <!-- Time badge -->
+          <div class="time-badge frost-glass">
+            <span>⏱️ Chỉ mất 2 phút</span>
+          </div>
+
+          <!-- CTA -->
+          <Button href="/health-check/quiz/" variant="primary" size="lg" fullWidth>
+            Bắt đầu kiểm tra
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero-section {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    background: linear-gradient(160deg, #E8F5EC 0%, #D4EDDA 40%, #C3E6CB 100%);
+  }
+
+  /* Blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob-1 {
+    width: 400px;
+    height: 400px;
+    background: rgba(94, 170, 110, 0.25);
+    top: -100px;
+    left: -120px;
+  }
+
+  .blob-2 {
+    width: 300px;
+    height: 300px;
+    background: rgba(245, 200, 66, 0.2);
+    bottom: -80px;
+    right: -80px;
+  }
+
+  .blob-3 {
+    width: 250px;
+    height: 250px;
+    background: rgba(125, 192, 138, 0.2);
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+  }
+
+  /* Container centering */
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .panel-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Panel */
+  .intro-panel {
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Icon */
+  .icon-box-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .icon-glass-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(94, 170, 110, 0.35);
+    box-shadow: 0 4px 16px rgba(61, 139, 79, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-emoji {
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .float-anim {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Text */
+  .panel-title {
+    font-size: 32px;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .panel-subtitle {
+    font-size: 15px;
+    color: var(--color-body);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Badge */
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-heading);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(94, 170, 110, 0.25);
+  }
+</style>
