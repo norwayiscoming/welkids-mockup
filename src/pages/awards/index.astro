@@ -1,0 +1,515 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import gallery from '../../data/gallery.json';
+
+const awardLabelMap: Record<string, string> = {
+  first: '🥇 Giải Nhất',
+  second: '🥈 Giải Nhì',
+  third: '🥉 Giải Ba',
+};
+---
+
+<MainLayout title="Giải Thưởng & Cuộc Thi">
+  <!-- Header Section -->
+  <section class="section">
+    <div class="container text-center">
+      <SectionHeader
+        title="Giải Thưởng & Cuộc Thi"
+        subtitle="Bộ sưu tập ảnh AI đã tạo và các câu chuyện truyền cảm hứng"
+        align="center"
+      />
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">Tất cả</button>
+        <button class="filter-tab" data-filter="first">🥇 Giải Nhất</button>
+        <button class="filter-tab" data-filter="second">🥈 Giải Nhì</button>
+        <button class="filter-tab" data-filter="third">🥉 Giải Ba</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Grid -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="gallery-grid" id="galleryGrid">
+        {gallery.map((item) => (
+          <div
+            class={`gallery-item leaf-glass${item.hasVideo ? ' has-video' : ''}`}
+            data-award={item.award ?? 'none'}
+            data-name={item.name}
+            data-career={item.career}
+          >
+            <!-- Image area -->
+            <div class="gallery-image">
+              <div class="gallery-placeholder">
+                <span class="gallery-emoji">🎨</span>
+              </div>
+
+              {item.award && (
+                <span class="award-badge frost-glass">
+                  {awardLabelMap[item.award]}
+                </span>
+              )}
+
+              {item.hasVideo && (
+                <div class="video-overlay">
+                  <button class="play-btn frost-glass" aria-label="Phát video">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <!-- Info -->
+            <div class="gallery-info">
+              <span class="gallery-name">{item.name}</span>
+              <span class="gallery-career">{item.career}</span>
+              <span class="gallery-ticket">{item.ticket}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div class="modal-overlay" id="videoModal" aria-hidden="true">
+    <div class="modal-panel leaf-glass">
+      <!-- Video placeholder -->
+      <div class="modal-video">
+        <span class="modal-play-icon">▶</span>
+      </div>
+      <!-- Story area -->
+      <div class="modal-story">
+        <p class="modal-name" id="modalName"></p>
+        <p class="modal-career" id="modalCareer"></p>
+        <p class="modal-story-text">Câu chuyện truyền cảm hứng</p>
+      </div>
+      <!-- Close button -->
+      <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <div class="cta-block">
+        <h3 class="cta-title">Tham Gia Cuộc Thi</h3>
+        <p class="cta-subtitle">Tạo ảnh nghề nghiệp cho bé và có cơ hội nhận giải thưởng</p>
+        <a href="/ai-generator/" class="btn btn-accent btn-lg">Tham gia ngay</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* ---- Filter Tabs ---- */
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 28px;
+  }
+
+  .filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.06);
+    color: var(--color-body);
+  }
+
+  .filter-tab:hover {
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--color-heading);
+  }
+
+  .filter-tab.active {
+    background: #5EAA6E;
+    color: #fff;
+    box-shadow: 0 2px 0 #3D8B4F;
+  }
+
+  /* ---- Gallery Grid ---- */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+
+  /* ---- Gallery Item ---- */
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(61, 139, 79, 0.16);
+  }
+
+  .gallery-item.has-video {
+    cursor: pointer;
+  }
+
+  .gallery-image {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .gallery-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary-tint) 0%, rgba(125, 192, 138, 0.4) 60%, var(--color-primary-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-emoji {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .award-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 50px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-heading);
+    z-index: 2;
+    font-family: var(--font-body);
+  }
+
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 1;
+  }
+
+  .gallery-item.has-video:hover .video-overlay {
+    opacity: 1;
+  }
+
+  .play-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-heading);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .play-btn svg {
+    margin-left: 2px;
+  }
+
+  .gallery-info {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .gallery-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    line-height: 1.3;
+  }
+
+  .gallery-career {
+    font-size: 13px;
+    color: var(--color-primary);
+    font-weight: 500;
+    font-family: var(--font-body);
+  }
+
+  .gallery-ticket {
+    font-size: 11px;
+    color: var(--color-muted);
+    font-family: var(--font-body);
+  }
+
+  /* ---- Video Modal ---- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-panel {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    border-radius: var(--radius-card);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .modal-video {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+    background: #1a3d22;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .modal-story {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .modal-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-heading);
+    font-family: var(--font-body);
+  }
+
+  .modal-career {
+    font-size: 14px;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-family: var(--font-body);
+  }
+
+  .modal-story-text {
+    font-size: 14px;
+    color: var(--color-muted);
+    font-family: var(--font-body);
+    margin-top: 4px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    font-size: 16px;
+    color: var(--color-heading);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  /* ---- CTA Block ---- */
+  .cta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    color: var(--color-heading);
+    font-weight: 700;
+  }
+
+  .cta-subtitle {
+    font-size: 16px;
+    color: var(--color-body);
+    max-width: 480px;
+  }
+
+  /* ---- Button (inline for CTA, reuse global patterns) ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: filter 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn-accent {
+    color: #2D4A35;
+    background: linear-gradient(180deg, #F8D76E 0%, #F5C842 50%, #E8B830 100%);
+    box-shadow: 0 2px 0 #D4A520;
+  }
+
+  .btn-accent:hover {
+    filter: brightness(1.04);
+  }
+
+  .btn-lg {
+    font-size: 16px;
+    padding: 15px 32px;
+  }
+</style>
+
+<script>
+  // ---- Filter Tabs ----
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      // Toggle active
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filter = tab.dataset.filter;
+
+      items.forEach((item) => {
+        if (filter === 'all') {
+          item.style.display = '';
+        } else {
+          const award = item.dataset.award;
+          item.style.display = award === filter ? '' : 'none';
+        }
+      });
+    });
+  });
+
+  // ---- Video Modal ----
+  const modal = document.getElementById('videoModal') as HTMLElement;
+  const modalName = document.getElementById('modalName') as HTMLElement;
+  const modalCareer = document.getElementById('modalCareer') as HTMLElement;
+  const modalClose = document.getElementById('modalClose') as HTMLButtonElement;
+
+  function openModal(name: string, career: string) {
+    modalName.textContent = name;
+    modalCareer.textContent = career;
+    modal.classList.add('visible');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('visible');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Click on has-video items
+  items.forEach((item) => {
+    if (item.classList.contains('has-video')) {
+      item.addEventListener('click', () => {
+        const name = item.dataset.name ?? '';
+        const career = item.dataset.career ?? '';
+        openModal(name, career);
+      });
+    }
+  });
+
+  // Close via button
+  modalClose.addEventListener('click', closeModal);
+
+  // Close via overlay click (outside panel)
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Close via Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('visible')) {
+      closeModal();
+    }
+  });
+</script>
